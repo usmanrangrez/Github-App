@@ -1,0 +1,12 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+  background-color: #000 !important;
+  color: #fff !important;
+}
+/* chakra uses default white bg */
+
