@@ -1,4 +1,4 @@
-import { Button, Input, Toast } from "@chakra-ui/react";
+import { Button, Input } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useState } from "react";
 import { useToast } from "@chakra-ui/react";
@@ -15,6 +15,7 @@ const Search = ({ setUserData, setLoading }) => {
     try {
       const res = await axios.get(`https://api.github.com/users/${query}`);
       setUserData(res);
+      addUserToLocalStorage(res, query);
     } catch (error) {
       return toast({
         title: "Error",
@@ -31,19 +32,39 @@ const Search = ({ setUserData, setLoading }) => {
     }
   };
 
+  const addUserToLocalStorage = (res, username) => {
+    //simple logic
+    //get all users if there are if not return empty array
+    const users = JSON.parse(localStorage.getItem("github-users")) || [];
+    const userExists = users.find((user) => user.id === username);
+
+    //to place on top of modal
+    if (userExists) {
+      users.splice(users.indexOf(userExists), 1);
+    }
+    users.unshift({
+      id: res.data.login,
+      avatar_url: res.data.avatar_url,
+      name: res.data.name,
+      url: res.data.html_url,
+    });
+
+    localStorage.setItem("github-users", JSON.stringify(users));
+  };
+
   return (
     <form onSubmit={handleSubmit}>
       <Input
         variant="outline"
         size="lg"
-        marginTop={5}
+        mt={5}
         placeholder="Type a username (i.e. usmanrangrez)"
         focusBorderColor="green.500"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
       <Button
-        marginTop={3}
+        mt={3}
         size="md"
         p={5}
         colorScheme="whatsapp"
