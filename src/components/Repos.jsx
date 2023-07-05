@@ -172,6 +172,108 @@ const Repos = ({ reposUrl }) => {
               Show Less
             </Button>
           )}
+        .map((repo, idx) => {
+          if (idx > 4 && !showMore) return null;
+          return (
+            <Flex
+              key={repo.id}
+              padding={4}
+              bg="green.800"
+              _hover={{ bg: "whiteAlpha.400" }}
+              my={4}
+              px={10}
+              gap={4}
+              borderRadius={4}
+              transition="all 0.3s ease"
+              justifyContent="space-between"
+              alignItems="center"
+              mt={2}
+              mr={10}
+              ml={10}
+            >
+              <Flex flex={1} direction="column">
+                <Link
+                  href={repo.html_url}
+                  target="_blank"
+                  fontSize="md"
+                  fontWeight="bold"
+                  style={{ wordBreak: "break-all" }}
+                >
+                  {repo.name}
+                </Link>
+                <Badge
+                  fontSize={["0.6em", "0.7em"]}
+                  colorScheme="whatsapp"
+                  textAlign="center"
+                  px={1}
+                  mt={1}
+                  width="min-content"
+                >
+                  LANGUAGE: {repo.language ? repo.language : " None"}
+                </Badge>
+              </Flex>
+
+              {!isMobileScreen && (
+                <Stack direction="row">
+                  <Badge
+                    bgColor="yellow.500"
+                    color="black"
+                    p={2}
+                    borderRadius={10}
+                    marginRight={4}
+                    fontSize={["0.8em", "1em"]}
+                  >
+                    STARS: {repo.stargazers_count ? repo.stargazers_count : 0}
+                  </Badge>
+                  <Badge
+                    bgColor="pink"
+                    color="black"
+                    p={2}
+                    borderRadius={10}
+                    marginRight={4}
+                    fontSize={["0.8em", "1em"]}
+                  >
+                    FORKS: {repo.forks ? repo.forks : 0}
+                  </Badge>
+                  <Badge
+                    bgColor="blue.300"
+                    color="black"
+                    p={2}
+                    borderRadius={10}
+                    marginRight={4}
+                    fontSize={["0.8em", "1em"]}
+                  >
+                    WATCHERS: {repo.watchers ? repo.watchers : 0}
+                  </Badge>
+                </Stack>
+              )}
+            </Flex>
+          );
+        })}
+      {!showMore && repos.length > 5 && (
+        <Flex justifyContent="center">
+          <Button
+            colorScheme="green"
+            size="md"
+            m={4}
+            w={"min-content"}
+            onClick={() => setShowMore(true)}
+          >
+            Show More
+          </Button>
+        </Flex>
+      )}
+      {showMore && repos.length > 5 && (
+        <Flex justifyContent="center">
+          <Button
+            colorScheme="green"
+            size="md"
+            m={4}
+            onClick={() => setShowMore(false)}
+          >
+            Show Less
+          </Button>
+
         </Flex>
       )}
     </>

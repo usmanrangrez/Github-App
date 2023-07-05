@@ -1,6 +1,9 @@
 import React from "react";
+
 import { Box, Button, Flex, Image, useDisclosure } from "@chakra-ui/react";
 import HistoryModal from "./HistoryModal";
+
+import { Box, Flex, Image } from "@chakra-ui/react";
 
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -18,12 +21,15 @@ const Navbar = () => {
           }}
         />
       </Box>
+
       <Box>
         <Button size="md" colorScheme="whatsapp" onClick={onOpen}>
           Search History
         </Button>
       </Box>
       {isOpen && <HistoryModal isOpen={isOpen} onClose={onClose} />}
+
+      <Box flex="1"></Box>
     </Flex>
   );
 };
